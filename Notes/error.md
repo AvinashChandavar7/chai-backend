@@ -1,4 +1,4 @@
-### Complete guide for router and Controller with debugging [https://www.youtube.com/watch?v=HqcGLJSORaA]
+### Complete guide for router and Controller with debugging ([Link here](https://www.youtube.com/watch?v=HqcGLJSORaA))
 
 ```bash
  C:\Users\yoyo\OneDrive\Desktop\chai-backend\node_modules\express\lib\router\route.js:211
@@ -30,7 +30,7 @@ const asyncHandler = (requestHandler) => {
 export { asyncHandler };
 ```
 
-- issue was `**return**` key in asyncHandler.js
+- issue was **`return`** key in asyncHandler.js
 
 ```javascript
 const asyncHandler = (requestHandler) => {
