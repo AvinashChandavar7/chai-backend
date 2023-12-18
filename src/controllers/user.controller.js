@@ -11,7 +11,8 @@ const generateAccessAndRefreshToken = async (userId) => {
     const user = await User.findById(userId);
 
     const accessToken = user.generateAccessToken();
-    const refreshToken = user.refreshAccessToken();
+    const refreshToken = user.generateRefreshToken();
+
 
     user.refreshToken = refreshToken;
 
@@ -112,10 +113,12 @@ const registerUser = asyncHandler(async (req, res) => {
 
 const loginUser = asyncHandler(async (req, res) => {
 
-  const { email, username, password } = req.body;
+  const { username, email, password } = req.body;
+  console.log(req.body);
 
-  if (!email || !username) {
-    throw new ApiError(400, "email or username is required");
+
+  if (!username && !email) {
+    throw new ApiError(400, "username or email is required")
   }
 
   const user = await User.findOne({
@@ -134,20 +137,13 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id);
 
-  if (!accessToken && !refreshToken) {
-    throw new ApiError(401, "something went wrong while creating token");
-  }
-
   const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
-
 
   const options = { httpOnly: true, secure: true };
 
-
-
   return res.status(200)
-    .cookies("accessToken", accessToken, options)
-    .cookies("refreshToken", refreshToken, options)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
     .json(new ApiResponse(200,
       { user: loggedInUser, accessToken, refreshToken },
       { message: "User successfully login" }),
@@ -173,7 +169,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   return res.status(200)
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)
-    .json(new ApiResponse(200, { loggedOutUser }, { message: "User successfully logout" }),);
+    .json(new ApiResponse(200, {}, { message: "User successfully logout" }),);
+  // .json(new ApiResponse(200, { loggedOutUser }, { message: "User successfully logout" }),);
 
 });
 

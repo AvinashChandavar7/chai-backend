@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 
-import { User } from "../models/user.model";
+import { User } from "../models/user.model.js";
 
-import { asyncHandler } from "../utils/asyncHandler"
-import { ApiError } from "../utils/ApiError"
+import { asyncHandler } from "../utils/asyncHandler.js"
+import { ApiError } from "../utils/ApiError.js"
 
 
 const secretKey = process.env.ACCESS_TOKEN_SECRET;
