@@ -289,6 +289,8 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Error while uploading on avatar");
   }
 
+  // TODO: delete old image - assignment
+
   const userId = req.user?._id;
 
   const updateUser = await User.findByIdAndUpdate(
