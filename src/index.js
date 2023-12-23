@@ -13,7 +13,9 @@ connectDB()
       console.log(`Server is running at port : http://localhost:${PORT}`.blue.bold.underline);
     })
   })
-  .catch((err) => { console.log(`MongoDB connection Failed: ${err}`) })
+  .catch((err) => {
+    console.log(`MongoDB connection Failed: ${err}`)
+  });
 
 
 
