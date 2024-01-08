@@ -6,6 +6,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { User } from "../models/user.model.js"
 
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 
 const generateAccessAndRefreshToken = async (userId) => {
@@ -162,7 +163,7 @@ const logoutUser = asyncHandler(async (req, res) => {
   const id = req.user._id;
 
   const loggedOutUser = await User.findByIdAndUpdate(id,
-    { $set: { refreshToken: undefined } },
+    { $unset: { refreshToken: 1 } },
     { new: true }
   );
 
@@ -391,6 +392,8 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
 
 const getWatchHistory = asyncHandler(async (req, res) => {
   const userId = req.user._id;
+
+  console.log(userId);
 
   const user = await User.aggregate([
     {

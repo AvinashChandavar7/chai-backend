@@ -37,13 +37,15 @@ router.post("/refresh-token", refreshAccessToken);
 
 router.post("/change-password", verifyJWT, changeCurrentPassword);
 
-router.get("/current-user", verifyJWT, getCurrentUser);
-
+//! Patch Routes
 router.patch("/update-account", verifyJWT, updateAccountDetails);
 
 router.patch("/avatar", verifyJWT, upload.single("avatar"), updateUserAvatar);
 
 router.patch("/cover-image", verifyJWT, upload.single("coverImage"), updateUserCoverImage);
+
+//! Get Routes
+router.get("/current-user", verifyJWT, getCurrentUser);
 
 router.get("/channel/:username", verifyJWT, getUserChannelProfile,);
 
